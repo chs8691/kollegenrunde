@@ -1,0 +1,11 @@
+<div class="{{ .context.Site.Params.background_color_class | default "bg-black" }} flex flex-wrap justify-left  pt1 pb1 pl5">
+  
+  {{ range $index, $element := .items }}
+    <div class="mr5" > 
+      <a href="{{ $element | relLangURL }}" class="ttu link f5 grow no-underline  dib hover-white no-underline white-80 pa2">
+        {{ $element }}
+      </a>
+    </div>  
+  {{ end}} 
+  </div>
+  

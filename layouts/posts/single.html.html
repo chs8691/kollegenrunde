@@ -1,0 +1,95 @@
+{{ define "header" }}{{ partial "page-header.html" . }}{{ end }}
+
+{{ define "main" }}
+  <div class="flex-l mt2 mw8 center">
+    <article class="center cf pv5 ph3 ph4-ns mw7">
+      <header>
+          <a href="{{ "/sports/" | relLangURL }}{{ .Params.Sports | urlize }}" class="link f5 grow no-underline  dib black ">
+            {{- .Params.Sports -}}
+          </a>
+        <h1 class="f1">
+          {{ .Title }} 
+        </h1>
+      </header>
+
+      {{/* Show facts, if available   */}}
+      <div class="nested-copy-line-height lh-copy f4 nested-links nested-img mid-gray">
+        {{ if isset .Params "distance_km" }}
+        <h1 class="f2">
+            Fakten 
+        </h1>
+        <ul>
+            {{ with .Params.distance_km}}
+            <li>
+                Distanz   : {{ . | float | lang.NumFmt 1   }} KM
+            </li>
+            {{ end }}
+            {{ with .Params.average_speed_kmh }}
+            <li>
+                Schnitt   : {{ . }} km/h
+            </li>
+            {{ end }}
+            {{ with .Params.ascent_m }}
+            <li>
+                Aufstieg: {{ lang.NumFmt 0 . "- . ," }}HM
+            </li>
+            {{ end }}
+            {{ with .Params.avarage_speed }}
+            <li>
+                Schnitt : {{ printf "%.f" . }} km/h
+            </li>
+            {{ end }}
+            {{ with .Params.temperature_c }}
+            <li>
+                Temperatur: {{ . }} °C
+            </li>
+            {{ end }}
+        </ul>
+        {{ end }}
+
+        {{ if isset .Params "members" }}
+          <h1 class="f2">
+            Teilnehmer 
+          </h1>
+          <div class="nested-copy-line-height lh-copy f4 nested-links nested-img mid-gray">
+            {{ $max := add -1 (len .Params.members) }}
+            {{ range $index, $member := .Params.members }}
+              {{ $member }}{{if lt $index $max }}, {{ end }}
+            {{ end}}
+          </div>
+        {{ end }}
+
+        <h1 class="f2">
+          Story 
+        </h1>
+        <div class="nested-copy-line-height lh-copy f4 nested-links nested-img mid-gray">
+          {{ .Content }}
+        </div>
+
+
+        <h1 class="f2">
+          Bilder 
+        </h1>
+        {{ $page := .}}
+        {{ with .Resources.Match "images/*"  }}
+          {{ range . }}
+            {{ $gallary_img := .Resize "800x" }}
+            <div class="pv4  b--black-10 ph3 ph0-l">
+              <a href="{{.Permalink}}" class="db ">
+              <img style="max-width: 100%; width: auto; height: auto;" src="{{ $gallary_img.RelPermalink }}" 
+                width="{{ .Width }}" height="{{ .Height }}" alt="{{ .Title }}" >
+                </a>
+            {{ if isset $page.Params "captions" }}
+              {{ range first 1 (where $page.Params.captions "name" .Name) }}
+                {{ .text }}
+              {{ end }}
+            {{ end }}
+          </div>
+          {{ end }}
+        {{ end }}
+
+      </div>
+    {{- partial "categories.html" . -}}
+    </article>
+  </div>
+{{ end }}

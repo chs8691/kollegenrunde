@@ -1,0 +1,40 @@
+{{ define "main" }}
+<div class="{{ .Site.Params.background_color_class | default "bg-black" }} flex justify-left pt3 pb3 pl5">
+  <div class="mr5" >
+    <a href="{{ "/sports/" | relLangURL }}" class="ttu link f5 grow no-underline  dib hover-white no-underline white-80  ">
+      Alle Sports
+    </a>
+  </div>  
+</div>
+<article class="cf pa3 pa4-m pa4-l">
+    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
+      {{ $total_distance := 0 }}
+      {{ $total_ascent := 0 }}
+      {{ $total_nr_of_tours := 0 }}
+      
+      {{ range  .Pages }}
+      {{ $act_ascent:= int .Params.ascent_m }}
+      {{ $total_ascent = add $act_ascent $total_ascent  }}
+      
+      {{ $act_distance:= int .Params.distance_km }}
+      {{ $total_distance = add $act_distance $total_distance  }}
+      
+      {{ $total_nr_of_tours = add 1 $total_nr_of_tours  }}
+      {{ end }}
+      
+      <p>Hier gibt`s alles über "{{ .Title }}" Touren im Überblick!</p>
+      <div>Anzahl Touren: {{ $total_nr_of_tours }}</div>
+      <div>Entfernung: {{ lang.NumFmt 0 $total_distance "- . ," }} km </div>
+      <div>Aufstieg:  {{ lang.NumFmt 0 $total_ascent "- . ," }} m </div>
+    </div>
+  </article>
+  <div class="mw8 center">    
+    <section class="flex-ns flex-wrap justify-around mt5">
+      {{ range  .Pages }}
+        <div class="relative w-100  mb4 bg-white">
+          {{ partial "summary.html" . }}
+        </div>
+      {{ end }}
+    </section>
+  </div>
+{{ end }}
