@@ -1,5 +1,5 @@
 title = "Kollegenrunde"
-baseURL = "https://kollegen.uber.space"
+baseURL = "https://kollegen.uber.space/kollegenrunde"
 languageCode = "de-de"
 theme = "ananke"
 
@@ -30,7 +30,7 @@ enableRobotsTXT = true
   favicon = ""
 
   site_logo = ""
-  description = "Der Kollege lädt ein, man trifft sich zum Radlen."
+  description = "Der Kollege lädt ein, man trifft sich zum Radeln."
   facebook = ""
   twitter = ""
   instagram = ""
@@ -49,6 +49,6 @@ enableRobotsTXT = true
   recent_posts_number = 5
 
 [[menu.main]]
-    name = "About"
+    name = "Über"
     identifier = "about"
     url = "/about/"

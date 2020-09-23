@@ -1,5 +1,5 @@
 {{ define "main" }}
-{{ partial "navigation-bar.html"  ( dict "context" . "items"  (slice "/sports/" "/eventtypes/" "/members/") )}}
+{{ partial "navigation-bar.html"  ( dict "context" . "items"  (slice "sports" "eventtypes" "members") )}}
   <article class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray">
     {{ .Content }}
     {{ $total_distance := 0 }}

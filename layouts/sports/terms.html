@@ -11,11 +11,11 @@
       <p>Events nach Sportarten. Navigiere weiter in die Posts einer Sportart.</p>
     </div>
   </article>
-  <div class="mw8 center">    
+  <div class="mw8 center">   
     <section class="flex-ns flex-wrap justify-around mt5">
       {{ range  .Pages }}
         <div class="relative w-100  mb4 bg-white">
-          {{ partial "summary.html" . }}
+          {{ partial "numbered-summary.html" . }}
         </div>
       {{ end }}
     </section>
