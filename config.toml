@@ -18,6 +18,7 @@ enableRobotsTXT = true
   sport = "sports"
   eventtype = "eventtypes"
   member = "members"
+  location = "locations"
 
 [sitemap]
   changefreq = "monthly"

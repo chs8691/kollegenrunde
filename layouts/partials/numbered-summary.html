@@ -1,18 +1,18 @@
 <div class="relative w-100  bg-white nested-copy-line-height">
   <div class="bg-white gray overflow-hidden">
   <div class="flex">
-    <div class="f1 pl2 pr2 pt4 pb4 mr3 bg-blue white">
+    <div class="f1 pl2 pr2 pt4 pb4 bg-blue white">
       {{ len .Data.Pages }}
     </div>
-    <div class="flex flex-column pt3">
-      <div class="f6 db">{{ humanize .Section }}</div>
+    <div class="flex flex-column mt3 ml3 ">
+      <div class="f6 pl2 db">{{ humanize .Section }}</div>
       <div class="nested-links f5 lh-copy nested-copy-line-height">
+        <h1 class="f3 near-black ">
+          <a href="{{ .Permalink }}" class="link black dim pa2">
+            {{ .Title }}
+          </a>
+        </h1>
       </div>
-      <h1 class="f3 near-black">
-        <a href="{{ .Permalink }}" class="link black dim">
-          {{ .Title }}
-        </a>
-      </h1>
     </div>
   </div>
   </div>

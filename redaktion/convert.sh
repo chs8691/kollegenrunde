@@ -1,6 +1,5 @@
 #!/bin/bash
 
-ROOT_SRC="/home/chris/hugo/kollegenrunde/redaktion/in/posts"
 ROOT_DST="/home/chris/hugo/kollegenrunde/content/posts"
 IMG="images"
 
@@ -10,10 +9,9 @@ shopt -s nocaseglob
 if [ "$1" == '-h' ]
   then 
     echo "Converter for a post's images. Usage:"
-    echo "convert DATE"
-    echo "  DATE must be a directory in $ROOT_DST/<DATA>/$IMG"
-    echo "  Images will be used in $ROOT_SRC/<DATA>/$IMG"
-    echo "  For instance: convert 20200912"
+    echo "convert PATH/"
+    echo "  Basename of PATH must be a directory in $ROOT_DST/<DIR>/$IMG (or will be created   )"
+    echo "  For instance: convert in/post/20200912"
   exit 0
 fi
 
@@ -22,8 +20,9 @@ if [ -z "$1" ]
   exit 1
 fi
 
-SRC="$ROOT_SRC/$1/$IMG"
-DST="$ROOT_DST/$1/$IMG"
+SRC="$1"
+DIR=$(basename "$1")
+DST="$ROOT_DST/$DIR/$IMG"
 
 if [ ! -e $SRC ]
   then echo "Directory '$SRC' not found !"
@@ -35,12 +34,12 @@ if [ ! -e $ROOT_DST ]
   exit 1
 fi
 
-if [ ! -e "$ROOT_DST/$1" ]
-  then echo "Create $ROOT_DST/$1"
-  mkdir "$ROOT_DST/$1"
+if [ ! -e "$ROOT_DST/$DIR" ]
+  then echo "Create $ROOT_DST/$DIR"
+  mkdir "$ROOT_DST/$DIR"
 fi
 
-echo "Create images for $1..."
+echo "Create images for $DIR..."
 
 
 if [ -e "$DST" ] 
