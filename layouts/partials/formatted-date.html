@@ -1,0 +1,5 @@
+<div>
+    {{ index $.Site.Data.weekday_short (printf "%d" .Date.Weekday) }},
+    {{ .Date.Day }}. 
+    {{ index $.Site.Data.month (printf "%d" .Date.Month) }} {{ .Date.Year }}
+</div>

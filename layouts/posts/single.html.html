@@ -1,11 +1,19 @@
 {{ define "header" }}{{ partial "page-header.html" . }}{{ end }}
 
 {{ define "main" }}
-  <div class="flex-l mt2 mw8 center">
+<div class="flex-l mt2 mw8 center">
     <article class="center cf pv5 ph3 ph4-ns mw7">
       <header>
+        <div class="flex justify-between">
+          <div class=" w-50 ">
             {{- .Params.Sports -}}
-      </header>
+          </div>
+          <div class=" w-50 tr ">
+            {{- .Params.Location -}}, 
+            {{ .Date.Format "2. January 2006" }}
+          </div>                  
+        </div>
+        </header>
 
       {{/* Show facts, if available   */}}
       <div class="nested-copy-line-height lh-copy f4 nested-links nested-img mid-gray">
@@ -26,7 +34,7 @@
             {{ end }}
             {{ with .Params.ascent_m }}
             <li>
-                Aufstieg: {{ lang.NumFmt 0 . "- . ," }}HM
+                Aufstieg: {{ lang.NumFmt 0 . "- . ," }} HM
             </li>
             {{ end }}
             {{ with .Params.avarage_speed }}
@@ -68,7 +76,7 @@
         {{ $page := .}}
         {{ with .Resources.Match "images/*"  }}
           {{ range . }}
-            {{ $gallary_img := .Resize "800x" }}
+            {{ $gallary_img := .Resize "600x" }}
             <div class="pv4  b--black-10 ph3 ph0-l">
               <a href="{{.Permalink}}" class="db ">
               <img style="max-width: 100%; width: auto; height: auto;" src="{{ $gallary_img.RelPermalink }}" 
