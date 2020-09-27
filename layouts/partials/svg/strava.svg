@@ -1,0 +1,19 @@
+<svg{{ with .size }} 
+height="{{ . }}" {{ end }} 
+style="enable-background:new 0 0 100 100;" 
+version="1.1" 
+viewBox="0 0 100 100" 
+width="{{ .size }}" 
+xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+    <path
+       style="fill-rule:evenodd;clip-rule:evenodd;"
+       d="M 43.034178,0.19789991 15.493163,56.12954 H 32.86621 L 43.034178,33.03579 53.2041,56.12954 h 17.373047 z"
+        />
+    <path
+       d="M 61.439189,99.143912 83.740512,56.12954 H 69.672697 L 61.439189,73.889851 53.2041,56.12954 H 39.136284 Z"
+       style="fill-rule:evenodd;clip-rule:evenodd;"
+        />
+
+
+</svg>
