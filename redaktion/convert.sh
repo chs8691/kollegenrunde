@@ -96,9 +96,9 @@ if [ $PARAM_IMAGES ]
     done
 fi
     
-##############################
-# Create index.md
-##############################
+###################################################
+# Create post.md and rename it to index.md (if new)
+###################################################
 if [ $PARAM_POST ]
     then
     echo Create post file
@@ -135,6 +135,22 @@ if [ $PARAM_POST ]
         sed -i -e "s/featured_image:.*/featured_image: images\/$FILE/g" $DST3
             
     fi
+
+    # Create example for caption entries
+    LINES=''
+    shopt -s nullglob # Sets nullglob to avoid not founds
+    for f in $SRC/*.{jpg,jpeg};
+    do
+        BNAME=$(basename $f)
+        LINE="#   - name: images\/$BNAME\n"
+        LINES="${LINES}$LINE"
+        LINE="#     text: \"\"\n"
+        LINES="${LINES}$LINE"
+    done
+    
+    echo Create captions
+    sed -i -e "s/# captions:/# captions: \n$LINES/g" $DST3
+    
  
     echo "$DST3" created
     

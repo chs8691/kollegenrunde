@@ -9,8 +9,8 @@
             {{- .Params.Sports -}}
           </div>
           <div class=" w-50 tr ">
-            {{- .Params.Location -}}, 
-            {{ .Date.Format "2. January 2006" }}
+            {{- .Params.Location -}}
+            {{ partial "formatted-date.html" . }}
           </div>                  
         </div>
         </header>
