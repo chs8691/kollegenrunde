@@ -7,7 +7,7 @@
           </div>
           <div class=" w-50 tr ">
             {{- .Params.Location -}}, 
-            {{ .Date.Format "2. January 2006" }}
+            {{ partial "formatted-date.html" . }}
           </div>                  
         </div>
       </div>

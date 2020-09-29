@@ -24,13 +24,12 @@
         <ul>
             {{ with .Params.distance_km}}
             <li>
-              Distanz   : {{ . | float | lang.NumFmt 1   }} KM
               Distanz   : {{ partial "func/NumberFormatter.html" ( dict "number" . "precision" 1 )}} KM
             </li>
             {{ end }}
             {{ with .Params.average_speed_kmh }}
             <li>
-                Schnitt   : {{ partial "func/NumberFormatter.html" ( dict "number" . "precision" 0 ) }}   km/h
+                Schnitt   : {{ partial "func/NumberFormatter.html" ( dict "number" . "precision" 1 ) }}   km/h
             </li>
             {{ end }}
             {{ with .Params.ascent_m }}
