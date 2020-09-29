@@ -26,7 +26,7 @@ members: [
 # City name of start point
 # It's taxonomy term: look at existing posts, to find the valid values  
 # If it's a new location: Take a simple city name
-location: "Somewhere"
+locations: "Somewhere"
 
 # false to hide it in production
 draft: false
