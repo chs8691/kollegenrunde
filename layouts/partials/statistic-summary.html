@@ -1,0 +1,5 @@
+
+
+    <div>Anzahl Touren: {{ .total_nr }}</div>
+    <div>Entfernung: {{ partial "func/NumberFormatter.html" ( dict  "number" .distance "precision" 0 ) }} km </div>
+    <div>Aufstieg:  {{ partial "func/NumberFormatter.html" ( dict "number" .ascent "precision" 0 ) }} m </div>

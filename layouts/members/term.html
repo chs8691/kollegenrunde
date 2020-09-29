@@ -23,9 +23,7 @@
       {{ end }}
       
       <p>Hier gibt`s alles über Touren mit {{ .Title }} im Überblick!</p>
-      <div>Anzahl Touren: {{ $total_nr_of_tours }}</div>
-      <div>Entfernung: {{ lang.NumFmt 0 $total_distance "- . ," }} km </div>
-      <div>Aufstieg:  {{ lang.NumFmt 0 $total_ascent "- . ," }} m </div>
+      {{ partial "statistic-summary.html" ( dict "total_nr" $total_nr_of_tours "distance" $total_distance "ascent" $total_ascent ) }}
     </div>
   </article>
   <div class="mw8 center">    

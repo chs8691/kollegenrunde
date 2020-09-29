@@ -24,17 +24,18 @@
         <ul>
             {{ with .Params.distance_km}}
             <li>
-                Distanz   : {{ . | float | lang.NumFmt 1   }} KM
+              Distanz   : {{ . | float | lang.NumFmt 1   }} KM
+              Distanz   : {{ partial "func/NumberFormatter.html" ( dict "number" . "precision" 1 )}} KM
             </li>
             {{ end }}
             {{ with .Params.average_speed_kmh }}
             <li>
-                Schnitt   : {{ . }} km/h
+                Schnitt   : {{ partial "func/NumberFormatter.html" ( dict "number" . "precision" 0 ) }}   km/h
             </li>
             {{ end }}
             {{ with .Params.ascent_m }}
             <li>
-                Aufstieg: {{ lang.NumFmt 0 . "- . ," }} HM
+                Aufstieg: {{ partial "func/NumberFormatter.html" ( dict "number" . "precision" 0) }} HM
             </li>
             {{ end }}
             {{ with .Params.avarage_speed }}
@@ -44,7 +45,7 @@
             {{ end }}
             {{ with .Params.temperature_c }}
             <li>
-                Temperatur: {{ . }} °C
+                Temperatur: {{ partial "func/NumberFormatter.html" ( dict "number" . "precision" 1 ) }} °C
             </li>
             {{ end }}
         </ul>

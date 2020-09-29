@@ -22,9 +22,7 @@
     {{ end }}
     
     <p></p>
-    <div>Anzahl Touren: {{ $total_nr_of_tours }}</div>
-    <div>Entfernung: {{ lang.NumFmt 0 $total_distance "- . ," }} km </div>
-    <div>Aufstieg:  {{ lang.NumFmt 0 $total_ascent "- . ," }} m </div>
+    {{ partial "statistic-summary.html" ( dict "total_nr" $total_nr_of_tours "distance" $total_distance "ascent" $total_ascent ) }}
 </article>
   {{/* Define a section to pull recent posts from. For Hugo 0.20 this will default to the section with the most number of pages. */}}
   {{ $mainSections := .Site.Params.mainSections | default (slice "post") }}
