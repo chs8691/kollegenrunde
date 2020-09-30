@@ -1,6 +1,9 @@
 {{ define "header" }}{{ partial "page-header.html" . }}{{ end }}
 
 {{ define "main" }}
+
+{{ partial "navigation-bar.html"  ( dict "context" . "items"  (slice "/" ) )}}
+
 <div class="flex-l mt2 mw8 center">
     <article class="center cf pv5 ph3 ph4-ns mw7">
       <header>
@@ -9,7 +12,7 @@
             {{- .Params.Sports -}}
           </div>
           <div class=" w-50 tr ">
-            {{- .Params.Location -}}
+            {{- .Params.Locations -}}
             {{ partial "formatted-date.html" . }}
           </div>                  
         </div>

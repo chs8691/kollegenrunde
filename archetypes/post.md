@@ -19,8 +19,11 @@ eventtypes: "single"
 # For new participants set "FirstName LastName"   
 # Unknown names have to be set as "Gast"
 members: [ 
-  "Peter Fessler", 
-  "Christian Schulzendorff"
+  "Peter", 
+  "Gregor",
+  "Edmund",
+  "Gerald",
+  "Christian"
   ]
 
 # City name of start point
