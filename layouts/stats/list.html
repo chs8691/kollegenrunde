@@ -1,0 +1,62 @@
+{{ define "main" }}
+
+  <article class="measure-wide-l center pa3 pa4-ns nested-copy-line-height nested-img">
+    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray">
+      {{- .Content -}}
+      <p id="top">Touren-Archiv</p>
+    </section>
+
+    <div class="center w-100">
+      <!-- Groups content by month according to the "date" field in front matter -->
+        {{ $pages := where .Site.RegularPages "Type" "in" (slice "posts") }}
+
+        {{ $maxDist := 0 }}
+        {{ $maxDistYear := "" }}
+
+
+        {{ range $pages.GroupByDate "2006" }}
+            {{ $dist := 0 }}
+
+            {{ range .Pages }}
+                {{ with .Params.distance_km }}
+                    {{ $dist = add . $dist }}
+                {{ end }}
+            {{ end }}
+
+            {{ if gt $dist $maxDist }}
+                {{ $maxDist = $dist }}
+                {{ $maxDistYear = .Key }}
+            {{ end }}
+
+        {{ end }}
+        Gesamtdistance in {{ $maxDistYear }} = {{ $maxDist }} km
+        
+        {{ range $pages.GroupByDate "2006" }}
+            {{ $dist := 0 }}
+
+            {{ range .Pages }}
+                {{ with .Params.distance_km }}
+                    {{ $dist = add . $dist }}
+                {{ end }}
+            {{ end }}
+
+        <section class="mt5">
+        <div>
+          <h3 id="{{ .Key }}">{{ .Key }} </h3>
+        </div>
+
+            <div class="center">    
+              <section class=" mt1">
+                  <div class="relative mb1 bg-white">
+                      Distance: {{ $dist }} km / {{  lang.NumFmt 0  ( mul $dist ( div 100 $maxDist ) ) }}%
+                  </div>
+              </section>
+            </div>
+          </section>
+      {{ end }}
+      <div class="mt4 flex flexbox justify-center">    
+        <a href=#top>top</a>
+    </div>
+    </div>
+  </article>
+{{ end }}

@@ -1,0 +1,17 @@
+  <div class="mid-gray overflow-hidden pt2 pb2 pl4 pr4">
+    <a href="{{ .Permalink }}" class="link black dim">
+      <h1 class="f6 ">
+      <div class="flex justify-between">
+        <div class=" w-50 ">
+          {{- partial "formatted-date.html" . -}}
+        </div>  
+        <div class=" w-50 tr">
+          {{ .Params.Sports }} 
+        </div>
+      </div>
+          {{ .Title }} / 
+          {{ .Params.Locations }}
+      </div>
+    </h1>
+  </a>
+</div>

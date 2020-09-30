@@ -1,11 +1,8 @@
 {{ define "main" }}
-<div class="{{ .Site.Params.background_color_class | default "bg-black" }} flex justify-left pt3 pb3 pl5">
-  <div class="mr5" >
-    <a href="{{ "/members/" | relLangURL }}" class="ttu link f5 grow no-underline  dib hover-white no-underline white-80  ">
-      Alle Teilnehmer
-    </a>
-  </div>  
-</div>
+
+{{ partial "navigation-bar.html"  ( dict "context" . "items"  (slice "members" ) )}}
+
+
 <article class="cf pa3 pa4-m pa4-l">
     <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
       {{ $total_distance := 0 }}
