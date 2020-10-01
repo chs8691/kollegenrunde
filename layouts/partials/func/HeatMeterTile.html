@@ -1,0 +1,26 @@
+{{/* 
+    HeatMeterTile
+
+    This partial visualizes a value to it's max value in a small tile. Inputs are following items:
+    two number values "value" and "max" and integer "precision" and "unit" for printing the value, "color". 
+    
+    @return -
+
+*/}}
+ {{ $x := 0 }}
+{{ if gt .max 0 }}
+    {{ $x = mul ( div 100.0 (float .max ) ) (float .value ) }}
+{{ else }}
+    {{ $x = 0 }}
+{{ end }}
+
+{{ $output := partial "func/NumberFormatter.html" ( dict "number" .value "precision" .precision ) }}
+
+
+<svg width="98" height="50" xmlns="http://www.w3.org/2000/svg">
+    <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+    <rect height="100%" width="100%" opacity="0.4" fill="{{ .color }}"/>
+    <rect height="100%" width="{{ $x }}"  fill="{{ .color }}"/>
+    <text xml:space="preserve" text-anchor="middle" font-family="Helvetica, Arial, sans-serif" 
+    class="f5 b" opacity="0.9" y="90%" x="40%" fill="#ffffff">{{ $output }}{{ .unit }}</text>
+</svg>

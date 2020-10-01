@@ -1,26 +1,50 @@
 {{ define "main" }}
 
   <article class="measure-wide-l center pa3 pa4-ns nested-copy-line-height nested-img">
-    <section class="cf ph3 ph5-l pv3 pv4-l f4 tc-l center measure-wide lh-copy mid-gray">
+    <section class="cf   pv3 pv4-l f4 tc-l  measure-wide lh-copy mid-gray">
       {{- .Content -}}
-      <p id="top">Touren-Archiv</p>
+      <p id="top">Etwas Statistik</p>
+      <p >Jahresweise sind folgende Werte summiert: Touren, Teilnehmer, Distanz und Höhenmeter.</p>
     </section>
 
     <div class="center w-100">
       <!-- Groups content by month according to the "date" field in front matter -->
         {{ $pages := where .Site.RegularPages "Type" "in" (slice "posts") }}
 
-        {{ $maxDist := 0 }}
+        {{ $maxDist := 0.0 }}
         {{ $maxDistYear := "" }}
 
+        {{ $maxAscent := 0.0 }}
+        {{ $maxAscentYear := "" }}
+
+        {{ $maxMembers := 0 }}
+        {{ $maxMembersYear := "" }}
+
+        {{ $maxTours := 0 }}
+        {{ $maxToursYear := "" }}
 
         {{ range $pages.GroupByDate "2006" }}
             {{ $dist := 0 }}
+            {{ $ascent := 0 }}
+            {{ $members := 0 }}
+            {{ $tours := 0 }}
 
             {{ range .Pages }}
+
                 {{ with .Params.distance_km }}
                     {{ $dist = add . $dist }}
                 {{ end }}
+
+                {{ with .Params.ascent_m }}
+                    {{ $ascent = add . $ascent }}
+                {{ end }}
+
+                {{ with .Params.members }}
+                    {{ $members = add ( len . ) $members }}
+                {{ end }}
+
+                {{ $tours = add 1 $tours }}
+
             {{ end }}
 
             {{ if gt $dist $maxDist }}
@@ -28,35 +52,72 @@
                 {{ $maxDistYear = .Key }}
             {{ end }}
 
+            {{ if gt $ascent $maxAscent }}
+                {{ $maxAscent = $ascent }}
+                {{ $maxAscentYear = .Key }}
+            {{ end }}
+
+            {{ if gt $members $maxMembers }}
+                {{ $maxMembers = $members }}
+                {{ $maxMembersYear = .Key }}
+            {{ end }}
+
+            {{ if gt $tours $maxTours }}
+                {{ $maxTours = $tours }}
+                {{ $maxToursYear = .Key }}
+            {{ end }}
+
+
         {{ end }}
-        Gesamtdistance in {{ $maxDistYear }} = {{ $maxDist }} km
-        
+
         {{ range $pages.GroupByDate "2006" }}
             {{ $dist := 0 }}
-
+            {{ $ascent := 0 }}
+            {{ $members := 0 }}
+            {{ $tours := 0 }}
+            
             {{ range .Pages }}
+
                 {{ with .Params.distance_km }}
                     {{ $dist = add . $dist }}
                 {{ end }}
+
+                {{ with .Params.Ascent_m }}
+                    {{ $ascent = add . $ascent }}
+                {{ end }}
+
+                {{ with .Params.members }}
+                    {{ $members = add ( len . ) $members }}
+                {{ end }}
+
+                {{ $tours = add 1 $tours }}
+
             {{ end }}
+            
 
-        <section class="mt5">
-        <div>
-          <h3 id="{{ .Key }}">{{ .Key }} </h3>
-        </div>
+            <section class="mt1">
+                
+                <div class="center flex flex-box  bg-white">    
+                    <div class="f3 pt3 blue b">
+                        <a href="../posts/#{{ .Key }}" class="link black dim">
+                        {{ .Key }}
+                        </a>
+                    </div>
+                    <div class="pt1 pl1">
+                        {{ partial "func/HeatMeterTile.html" (dict "color" "#009999" "value" $tours "max" $maxTours "precision" 0 "unit" "") }}
+                    </div>
+                    <div class="pt1 pl1">
+                        {{ partial "func/HeatMeterTile.html" (dict "color" "#0099cc" "value" $members "max" $maxMembers "precision" 0 "unit" "") }}
+                    </div>
+                    <div class="pt1 pl1">
+                        {{ partial "func/HeatMeterTile.html" (dict "color" "#3e7474" "value" $dist "max" $maxDist "precision" 0 "unit" "km") }}
+                    </div>
+                    <div class="pt1 pl1">
+                        {{ partial "func/HeatMeterTile.html" (dict "color" "#007f00" "value" $ascent "max" $maxAscent "precision" 0 "unit" "HM") }}
+                    </div>
+            </section>
 
-            <div class="center">    
-              <section class=" mt1">
-                  <div class="relative mb1 bg-white">
-                      Distance: {{ $dist }} km / {{  lang.NumFmt 0  ( mul $dist ( div 100 $maxDist ) ) }}%
-                  </div>
-              </section>
-            </div>
-          </section>
-      {{ end }}
-      <div class="mt4 flex flexbox justify-center">    
-        <a href=#top>top</a>
-    </div>
-    </div>
-  </article>
+        {{ end }}
+
+    </article>
 {{ end }}

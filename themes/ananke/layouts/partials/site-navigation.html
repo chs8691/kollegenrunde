@@ -4,7 +4,7 @@
       {{ with .Site.Params.site_logo }}
         <img src="{{ . }}" class="w100 mw5-ns" alt="{{ $.Site.Title }}" />
       {{ else }}
-        {{ .Site.Title }}
+        {{ .Site.Params.title_short }}
       {{ end }}
     </a>
     <div class="flex-l items-center">

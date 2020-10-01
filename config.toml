@@ -31,6 +31,7 @@ enableRobotsTXT = true
   favicon = ""
 
   site_logo = ""
+  title_short = "KR"
   description = "Der Kollege lädt ein, man trifft sich zum Radeln."
   facebook = ""
   twitter = ""
@@ -54,3 +55,8 @@ enableRobotsTXT = true
     name = "Über"
     identifier = "about"
     url = "/about/"
+
+[[menu.main]]
+    name = "Statistik"
+    identifier = "stats"
+    url = "/stats/"
