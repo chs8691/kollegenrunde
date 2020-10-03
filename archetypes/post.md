@@ -63,6 +63,12 @@ featured_image:
 # Be careful: src value must be unique
 resources:
 -  src: images/**
+
+# Links to activity on social platforms
+# Example velohero_activity: https://app.velohero.com/activity/364363
+# velohero_activity: 
+# strava_activity: 
+
 ---
 
 
