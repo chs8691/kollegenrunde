@@ -1,28 +1,28 @@
 {{ define "main" }}
 
-  <article class="measure-wide-l center pa3 pa4-ns nested-copy-line-height nested-img">
+<article class="measure-wide-l center pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf   pv3 pv4-l f4 tc-l  measure-wide lh-copy mid-gray">
-      {{- .Content -}}
-      <p id="top">Etwas Statistik</p>
-      <p >Jahresweise sind folgende Werte summiert: Touren, Teilnehmer, Distanz und Höhenmeter.</p>
-    </section>
+        {{- .Content -}}
+        <p id="top">Etwas Statistik</p>
+        <p >Jahresweise sind folgende Werte summiert: Touren, Teilnehmer, Distanz und Höhenmeter.</p>
+      </section>
 
     <div class="center w-100">
-      <!-- Groups content by month according to the "date" field in front matter -->
         {{ $pages := where .Site.RegularPages "Type" "in" (slice "posts") }}
-
+        
         {{ $maxDist := 0.0 }}
         {{ $maxDistYear := "" }}
-
+        
         {{ $maxAscent := 0.0 }}
         {{ $maxAscentYear := "" }}
-
+        
         {{ $maxMembers := 0 }}
         {{ $maxMembersYear := "" }}
-
+        
         {{ $maxTours := 0 }}
         {{ $maxToursYear := "" }}
-
+            
+        <!-- Groups content by month according to the "date" field in front matter -->
         {{ range $pages.GroupByDate "2006" }}
             {{ $dist := 0 }}
             {{ $ascent := 0 }}
@@ -118,6 +118,6 @@
             </section>
 
         {{ end }}
-
-    </article>
+    </div>
+</article>
 {{ end }}
