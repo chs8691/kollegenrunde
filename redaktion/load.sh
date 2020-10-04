@@ -61,12 +61,17 @@ fi
 echo "Create $DST"
 mkdir "$DST"
 
-PATTERN="${1// /\\ }*.jpg"
-echo pattern=$PATTERN
-if [ ${#PATTERN[@]}  ] 
-    then 
-    echo copying "$PATTERN"...
-    cp -v "$1"/*.jpg "$DST"/
-fi
+# It's tricky to copy dirs with whitespaces
+shopt -s extglob   # turn on extended globbing
+SAVEIFS=$IFS
+IFS=$(echo -en "\n\b")
+for f in $1?(*.jpg|*.jpeg|*.png)
+do
+  echo "$f"
+  cp -v "$f" "$DST"/
+done
+IFS=$SAVEIFS
+
+
 
 
