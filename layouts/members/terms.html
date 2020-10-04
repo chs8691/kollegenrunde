@@ -2,18 +2,44 @@
 
 {{ partial "navigation-bar.html"  ( dict "context" . "items"  (slice "/" ) )}}
 
-<article class="cf pa3 pa4-m pa4-l">
-    <div class="measure-wide-l center f4 lh-copy nested-copy-line-height nested-links nested-img mid-gray">
-      <p>Events nach Teilnehmenden. Die Grafik zeigt die prozentuale Kilometerleistung pro Jahr. Navigiere weiter in die Posts eines Teilnehmenden.</p>
-    </div>
-  </article>
-  <div class=" center">    
-    <section class="flex-ns flex-wrap justify-around mt5">
-      {{ range .Data.Terms.ByCount}}
-        <div class="relative w-100 mb4 bg-white">
-          {{ partial "members-summary.html" .Page }}
-        </div>
-      {{ end }}
-    </section>
+<article class="measure-wide center pa3 pa4-ns nested-copy-line-height nested-img">
+  <section class="cf   pv3 pv4-l f4 tc-l  measure-wide lh-copy mid-gray">
+    <div class="cf   pv3 pv4-l f4 tc-l  measure-wide lh-copy mid-gray">
+    <p>Events nach Teilnehmenden. Die Grafik zeigt die prozentuale Kilometerleistung pro Jahr. Navigiere weiter in die Posts eines Teilnehmenden.</p>
   </div>
+  </section>
+
+  <div class="w-100">    
+    {{ range .Data.Terms.ByCount }}
+      <section class="mt1">
+        <div class="flex flex-column bg-white ba b--white bw2 ">
+
+          <div class="flex bg-white">
+  
+            <div class="flex">
+              <div class="f1 w4 tr pr4 pt1  bg-blue white">
+                {{ len .Pages }}
+              </div>    
+            </div>    
+            
+              <div class="flex flex-column pl2">
+                <div class=" pl2 ">
+                  {{ humanize .Page.Section }}
+                </div>
+              
+                <a href="{{ .Page.Permalink }}" class="f3 b near-black link black dim pr4 pt2 pb2">
+                  {{ .Page.Title }}
+                </a>
+              </div>
+            </div>
+            
+            <div class="flex pt1">
+              {{ partial "members-summary.html" .Page }}
+            </div>
+            
+        </div>
+      </section>
+    {{ end }}
+  </div>
+</article>
 {{ end }}

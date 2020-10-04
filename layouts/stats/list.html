@@ -1,13 +1,13 @@
 {{ define "main" }}
 
-<article class="measure-wide-l center pa3 pa4-ns nested-copy-line-height nested-img">
+<article class="measure-wide center pa3 pa4-ns nested-copy-line-height nested-img">
     <section class="cf   pv3 pv4-l f4 tc-l  measure-wide lh-copy mid-gray">
         {{- .Content -}}
         <p id="top">Etwas Statistik</p>
         <p >Jahresweise sind folgende Werte summiert: Touren, Teilnehmer, Distanz und Höhenmeter.</p>
-      </section>
+    </section>
 
-    <div class="center w-100">
+    <div class=" w-100">
         {{ $pages := where .Site.RegularPages "Type" "in" (slice "posts") }}
         
         {{ $maxDist := 0.0 }}
@@ -96,25 +96,29 @@
             
 
             <section class="mt1">
-                
-                <div class="center flex flex-box  bg-white">    
-                    <div class="f3 pt3 blue b">
-                        <a href="../posts/#{{ .Key }}" class="link black dim">
-                        {{ .Key }}
-                        </a>
+                <div class="center flex flex-wrap  bg-white">    
+                    <div class="flex ">    
+                        <div class="f3 pt3 blue b">
+                            <a href="../posts/#{{ .Key }}" class="link black dim">
+                            {{ .Key }}
+                            </a>
+                        </div>
                     </div>
-                    <div class="pt1 pl1">
-                        {{ partial "func/HeatMeterTile.html" (dict "color" "#009999" "value" $tours "max" $maxTours "precision" 0 "unit" "") }}
+                    <div class="flex flex-wrap">
+                        <div class="pt1 pl1">
+                            {{ partial "func/HeatMeterTile.html" (dict "color" "#009999" "value" $tours "max" $maxTours "precision" 0 "unit" "") }}
+                        </div>
+                        <div class="pt1 pl1">
+                            {{ partial "func/HeatMeterTile.html" (dict "color" "#0099cc" "value" $members "max" $maxMembers "precision" 0 "unit" "") }}
+                        </div>
+                        <div class="pt1 pl1">
+                            {{ partial "func/HeatMeterTile.html" (dict "color" "#3e7474" "value" $dist "max" $maxDist "precision" 0 "unit" "km") }}
+                        </div>
+                        <div class="pt1 pl1">
+                            {{ partial "func/HeatMeterTile.html" (dict "color" "#007f00" "value" $ascent "max" $maxAscent "precision" 0 "unit" "HM") }}
+                        </div>
                     </div>
-                    <div class="pt1 pl1">
-                        {{ partial "func/HeatMeterTile.html" (dict "color" "#0099cc" "value" $members "max" $maxMembers "precision" 0 "unit" "") }}
-                    </div>
-                    <div class="pt1 pl1">
-                        {{ partial "func/HeatMeterTile.html" (dict "color" "#3e7474" "value" $dist "max" $maxDist "precision" 0 "unit" "km") }}
-                    </div>
-                    <div class="pt1 pl1">
-                        {{ partial "func/HeatMeterTile.html" (dict "color" "#007f00" "value" $ascent "max" $maxAscent "precision" 0 "unit" "HM") }}
-                    </div>
+                </div>
             </section>
 
         {{ end }}

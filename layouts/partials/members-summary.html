@@ -1,80 +1,59 @@
-<div class="relative w-100  bg-white nested-copy-line-height">
-  <div class="bg-white gray overflow-hidden">
-  <div class="flex">
-    <div class="f1 w4 tr pr4 pt4 pb4 bg-blue white">
-      {{ len .Data.Pages }}
-    </div>    
-    
-    <div class="flex w-30 flex-column mt3 ml3 ">
-      <div class="f6 pl2 db">{{ humanize .Section }}</div>
-      <div class="nested-links f5 lh-copy nested-copy-line-height">
-        <h1 class="f3 near-black ">
-          <a href="{{ .Permalink }}" class="link black dim pa2">
-            {{ .Title }}
-          </a>
-        </h1>
-      </div>
-    </div>
-    <div class="relative flex flex-column justify-center  ">
+{{ $key := .Title }}
+{{ $pages := where .Site.RegularPages "Type" "in" (slice "posts") }}
+{{ $count := len $pages }}
 
-      {{ $key := .Title }}
-      {{ $pages := where .Site.RegularPages "Type" "in" (slice "posts") }}
-      {{ $count := len $pages }}
+{{ $totalWidth := 100.0 }}
+{{ $totalHeight := 50.0 }}
+{{/*  {{ $width := div $totalWidth  ( len ( $pages.GroupByDate "2006" ) ) }}  */}}
+{{ $width := div $totalWidth  ( len ( $pages.GroupByDate "2006" ) ) }}
 
-      {{ $totalWidth := 500.0 }}
-      {{ $totalHeight := 75.0 }}
-      {{ $width := div $totalWidth  ( len ( $pages.GroupByDate "2006" ) ) }}
+{{ $color := "#357edd" }}
 
-      {{ $color := "#b3cce6" }}
-      <svg width="{{ $totalWidth }}" height="{{ $totalHeight }}" xmlns="http://www.w3.org/2000/svg">
-        <rect height="100%" width="100%" opacity="0.5" fill="{{ $color }}"/>
+<svg width="{{ $totalWidth }}%" height="{{ $totalHeight }}" 
+xmlns="http://www.w3.org/2000/svg">
+  <rect height="100%" width="100%" opacity="0.1" fill="{{ $color }}"/>
 
-      {{ $x := 0 }}
-      {{ range sort ( $pages.GroupByDate "2006" ) "Key" }}
+  {{ $x := 0 }}
+  {{ range sort ( $pages.GroupByDate "2006" ) "Key" }}
 
-        {{ $maxDist := 0.00 }}
-        {{ $maxCount := 0 }}
-        {{ $dist := 0.00 }}
-        {{ $count := 0 }}
+    {{ $maxDist := 0.00 }}
+    {{ $maxCount := 0 }}
+    {{ $dist := 0.00 }}
+    {{ $count := 0 }}
 
-        {{ range .Pages }}
-          {{ $maxCount = add 1 $maxCount }}
+    {{ range .Pages }}
+      {{ $maxCount = add 1 $maxCount }}
 
-          {{ $isMember := false }}
+      {{ $isMember := false }}
 
-          {{ range .Params.members }}
-            {{ if eq . $key }}
-              {{ $isMember = true }}
-              {{ $count = add 1 $count }}
-            {{ end }}
-          {{ end }}
-        
-          {{ with .Params.distance_km }}
-            {{ $maxDist = add . $maxDist }}
-            {{ if $isMember }}
-              {{ $dist = add . $dist }}
-            {{ end }}
-          {{ end }}
+      {{ range .Params.members }}
+        {{ if eq . $key }}
+          {{ $isMember = true }}
+          {{ $count = add 1 $count }}
         {{ end }}
-        
-        {{ $height := 0 }}
-        {{ if gt $maxDist 0 }}
-          {{ $height = mul (float $totalHeight ) ( div (float $dist ) ( float $maxDist ) )  }}
-          {{ else }}
-          {{ $height = mul (float $totalHeight ) ( div (float $count ) ( float $maxCount ) )  }}
-        {{ end }}
-        {{/*  {{ $maxDist }}  */}}
-        {{/*  {{ $dist }}  */}}
-        {{/*  {{ $x }}  */}}
-        {{/*  {{ $height }}  */}}
-        <rect height="{{ $height }}" y="{{ sub $totalHeight $height }}" x="{{ $x }}" width="{{ $width }}"  fill="{{ $color }}"/>
-
-        {{ $x = add $x $width }}
       {{ end }}
-          </svg>
-      </div>
-
     
-  </div>
-  </div>
-</div>
+      {{ with .Params.distance_km }}
+        {{ $maxDist = add . $maxDist }}
+        {{ if $isMember }}
+          {{ $dist = add . $dist }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+    
+    {{ $height := 0 }}
+    {{ if gt $maxDist 0 }}
+      {{ $height = mul (float $totalHeight ) ( div (float $dist ) ( float $maxDist ) )  }}
+      {{ else }}
+      {{ $height = mul (float $totalHeight ) ( div (float $count ) ( float $maxCount ) )  }}
+    {{ end }}
+    {{/*  {{ $maxDist }}  */}}
+    {{/*  {{ $dist }}  */}}
+    {{/*  {{ $x }}  */}}
+    {{/*  {{ $height }}  */}}
+    <rect opacity="0.2" height="{{ $height }}" y="{{ sub $totalHeight $height }}" x="{{ $x }}%" 
+      width="{{ $width }}%"  fill="{{ $color }}" stroke-width="1.5" stroke="{{$color}}"/>
+
+    {{ $x = add $x $width }}
+  {{ end }}
+</svg>  
