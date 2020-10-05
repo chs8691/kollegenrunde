@@ -19,6 +19,13 @@ if [ "$1" == '-h' ]
   exit 0
 fi
 
+FORCE="false"
+if [ "$2" = "-f" ] || [ "$3" = "-f" ] || [ "$4" = "-f" ] 
+then
+  FORCE="true"
+fi
+echo "force=$FORCE"
+
 if [ -z "$1" ]
   then echo "Missing path, e. g. 'Call convert in/posts/20030412"
   exit 1
@@ -32,28 +39,24 @@ if [ -z "$2" ]
   exit 1
 fi
 
-if [ "$2" == "images" ]
+if [ "$2" = "images" ] || [ "$3" = "images" ] || [ "$4" = "images" ]
     then PARAM_IMAGES="true"
-elif [ "$2" == "post" ]
-    then PARAM_POST="true"
-else 
-    echo "Second parameter must be images pr post"
 fi
 
-if [ ! -z "$3" ] 
-    then 
-        if [ "$3" == "images" ]
-        then PARAM_IMAGES="true"
-    elif [ "$3" == "post" ]
-       then PARAM_POST="true"
-    else 
-        echo "Third parameter must be images or post"
-    fi
+if [ "$2" = "post" ] || [ "$3" = "post" ] || [ "$4" = "post" ]
+    then PARAM_POST="true"
+else 
+    echo "Parameter missing: 'images' and/or 'post'"
+    exit 1
 fi
+
+#echo "Param images=$PARAM_IMAGES"
+#echo "Param post=$PARAM_POST"
 
 SRC="$1"
 DIR=$(basename $1)
 DST="$ROOT_DST/$DIR/$IMG"
+DST2="$ROOT_DST/$DIR/index.md"
 
 if [ $PARAM_IMAGES ]
     then
@@ -73,11 +76,16 @@ if [ $PARAM_IMAGES ]
     mkdir "$ROOT_DST/$DIR"
     fi
 
-    echo "Create images for $DIR..."
 
 
     if [ -e "$DST" ] 
         then 
+        if [ $FORCE = "false" ]
+            then echo "$DST already exists! Use 'f' to overwrite images (and index.md)."
+            exit 1
+        fi
+        echo "Create images for $DIR..."
+
         echo "Delete $DST"
         rm -r "$DST"
     fi
@@ -88,7 +96,7 @@ if [ $PARAM_IMAGES ]
     # Only the largest size. Downsize should be done in HUGO
     echo Converting...
     shopt -s nullglob # Sets nullglob to avoid not founds
-    for f in $SRC/*.{jpg,jpeg};
+    for f in $SRC/*.{jpg,jpeg,png};
     do
         BNAME=$(basename $f)
         echo $BNAME
@@ -101,18 +109,18 @@ fi
 ###################################################
 if [ $PARAM_POST ]
     then
-    echo Create post file
+    #echo Create post file
     if [ ! -e $TEMPLATE ]
         then echo "Template '$TEMPLATE' not found !"
         exit 1
     fi
     
-    DST2="$ROOT_DST/$DIR/index.md"
-    echo DST2=$DST2
+
+    #echo DST2=$DST2
     
     NAME=$(basename $TEMPLATE)
-    DST3="$ROOT_DST/$DIR/$NAME"
-    echo DST3=$DST3
+    DST3="$ROOT_DST/$DIR/~$NAME"
+    #echo DST3=$DST3
 
     cp $TEMPLATE "$DST3"
 
@@ -123,14 +131,14 @@ if [ $PARAM_POST ]
     sed -i -e "s/date: .*/date: ${DIR:0:4}-${DIR:4:2}-${DIR:6:2}/g" $DST3
 
     # Take first image as featured / header image
-    echo dst=$DST
+    #echo dst=$DST
     FILES=($DST/*)
     FIRST=${FILES[0]}
     
     if [ -e $FIRST ]
         then
         FILE=$(basename $FIRST)
-        echo "file=$FILE"
+        #echo "file=$FILE"
         sed -i -e "s/header_image:.*/header_image: images\/$FILE/g" $DST3
         sed -i -e "s/featured_image:.*/featured_image: images\/$FILE/g" $DST3
             
@@ -148,18 +156,24 @@ if [ $PARAM_POST ]
         LINES="${LINES}$LINE"
     done
     
-    echo Create captions
+    #echo Create captions
     sed -i -e "s/# captions:/# captions: \n$LINES/g" $DST3
     
  
-    echo "$DST3" created
+    #echo "$DST3" created. This is just a filled template, but not used in the blog.
     
-    if [ -e $DST2 ]
-        then echo "File '$DST2' already exists and will not be overwritten !"
+    if [ -e $DST2 ] && [ $FORCE = "false" ]
+        then echo "File '$DST2' already exists! Use -f to overwrite it!"
         exit 1
+    else
+        mv $DST3 $DST2
+        if [ -e $DST2 ] && [ $FORCE = "false" ]
+            then echo "$DST2" created. Add your content here.
+        else
+            echo "$DST2" overwritten. Add your content here.
+        fi        
     fi
     
-    mv $DST3 $DST2
     
     
 fi
