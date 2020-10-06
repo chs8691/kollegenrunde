@@ -1,12 +1,14 @@
 {{ $icon_size := "32px" }}
+
+{{ with .Param "strava_activity" }}
+<a href="{{ . }}" target="_blank" class="link-transition  gitlab link dib z-999 pt3 pt0-l mr1 pr3" title="Strava-Aktivität" rel="noopener" aria-label="Our Strava Club——Opens in a new window">
+  {{ partial "svg/strava.svg" (dict "size" $icon_size) }}
+</a>
+{{ end }}
+
 {{ with .Param "velohero_activity" }}
-  <a href="{{ . }}" target="_blank" class="link-transition facebook link dib z-999 pt3 pt0-l mr1" title="Velohero link" rel="noopener" aria-label="Track on Velohero——Opens in a new window">
+  <a href="{{ . }}" target="_blank" class="link-transition facebook link dib z-999 pt3 pt0-l mr1" title="Velohero-Aktivität" rel="noopener" aria-label="Track on Velohero——Opens in a new window">
     {{ partial "svg/velohero.svg" (dict "size" $icon_size) }}
   </a>
 {{ end }}
 
-{{ with .Param "strava_activity" }}
-<a href="{{ . }}" target="_blank" class="link-transition  gitlab link dib z-999 pt3 pt0-l mr1" title="Strava link" rel="noopener" aria-label="Our Strava Club——Opens in a new window">
-  {{ partial "svg/strava.svg" (dict "size" $icon_size) }}
-</a>
-{{ end }}

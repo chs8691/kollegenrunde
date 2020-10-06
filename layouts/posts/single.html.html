@@ -74,7 +74,7 @@
 
 
         <h1 class="f2">
-          Bilder 
+          Bilder des Tages  
         </h1>
         {{ $page := .}}
         {{ with .Resources.Match "images/*"  }}
@@ -93,10 +93,14 @@
           </div>
           {{ end }}
         {{ end }}
-      </div>
 
+
+      </div>
+      <hr>
       {{ partial "social-activity.html" . }}
 
     </article>
   </div>
-{{ end }}
+
+
+  {{ end }}
