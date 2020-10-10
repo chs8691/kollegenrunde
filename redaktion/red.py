@@ -267,7 +267,12 @@ def convert(image_path):
         else:
             new_image = im.resize((round(1200*im.width/im.height), 1200))
 
-        new_image.save(out_path, exif=im.info['exif'], quality=80)
+        if 'exif' in im.info:
+            new_image.save(out_path, exif=im.info['exif'], quality=80)
+        else:
+            new_image.save(out_path, quality=80)
+
+
         names.append(f)
 
     settings_save_images(names)
